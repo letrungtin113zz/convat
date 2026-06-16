@@ -20,9 +20,7 @@
       --radius-md: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -37,14 +35,8 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
+    body { min-height: 100vh; overflow-x: hidden; }
+    button, input, select { font: inherit; }
 
     .app {
       min-height: 100vh;
@@ -71,18 +63,7 @@
       box-shadow: var(--shadow);
     }
 
-    .admin-top-btn,
-    .back-btn,
-    .nav-btn,
-    .speak-btn,
-    .primary-btn,
-    .secondary-btn,
-    .danger-btn,
-    .save-btn,
-    .edit-btn,
-    .delete-btn,
-    .option-btn,
-    .fix-image-btn {
+    .admin-top-btn, .back-btn, .nav-btn, .speak-btn, .primary-btn, .secondary-btn, .danger-btn, .save-btn, .edit-btn, .delete-btn, .option-btn, .fix-image-btn, .category-btn {
       border: none;
       border-radius: 999px;
       cursor: pointer;
@@ -90,22 +71,11 @@
       font-weight: 800;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-    }
+    button:hover { transform: translateY(-2px); }
+    button:active { transform: scale(0.98); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-    button:active {
-      transform: scale(0.98);
-    }
-
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .admin-top-btn,
-    .back-btn {
+    .admin-top-btn, .back-btn {
       background: white;
       color: var(--secondary);
       padding: 10px 16px;
@@ -121,10 +91,7 @@
       align-items: center;
       justify-content: center;
     }
-
-    .screen.active {
-      display: flex;
-    }
+    .screen.active { display: flex; }
 
     .card {
       width: 100%;
@@ -135,10 +102,7 @@
       padding: 20px;
     }
 
-    .home-card {
-      text-align: center;
-      padding: 28px 20px 34px;
-    }
+    .home-card { text-align: center; padding: 28px 20px 34px; }
 
     .logo {
       font-size: clamp(2rem, 7vw, 4.2rem);
@@ -179,33 +143,21 @@
       margin: 0 auto;
     }
 
-    .primary-btn,
-    .secondary-btn {
+    .primary-btn, .secondary-btn {
       padding: 18px 20px;
       font-size: clamp(1.05rem, 3vw, 1.3rem);
       color: white;
       box-shadow: var(--shadow);
     }
+    .primary-btn { background: linear-gradient(135deg, var(--primary), #ffb347); }
+    .secondary-btn { background: linear-gradient(135deg, var(--secondary), #7ab8ff); }
 
-    .primary-btn {
-      background: linear-gradient(135deg, var(--primary), #ffb347);
-    }
-
-    .secondary-btn {
-      background: linear-gradient(135deg, var(--secondary), #7ab8ff);
-    }
-
-    .learn-layout,
-    .game-layout,
-    .admin-layout {
+    .learn-layout, .game-layout, .admin-layout, .color-layout {
       display: grid;
       gap: 18px;
       width: 100%;
     }
-
-    .learn-layout {
-      grid-template-columns: 1fr;
-    }
+    .learn-layout { grid-template-columns: 1fr; }
 
     .animal-image-wrap {
       background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
@@ -241,21 +193,14 @@
       margin: 0 auto;
     }
 
-    .speak-btn,
-    .nav-btn {
+    .speak-btn, .nav-btn {
       padding: 16px 20px;
       font-size: clamp(1rem, 3vw, 1.2rem);
       color: white;
       box-shadow: var(--shadow);
     }
-
-    .speak-btn {
-      background: linear-gradient(135deg, #a84dff, #d37fff);
-    }
-
-    .nav-btn {
-      background: linear-gradient(135deg, var(--success), #58d68d);
-    }
+    .speak-btn { background: linear-gradient(135deg, #a84dff, #d37fff); }
+    .nav-btn { background: linear-gradient(135deg, var(--success), #58d68d); }
 
     .section-title {
       font-size: clamp(1.6rem, 5vw, 2.5rem);
@@ -273,8 +218,7 @@
       margin: 0 auto 18px;
     }
 
-    .category-btn,
-    .category-tag {
+    .category-btn, .category-tag {
       border: none;
       border-radius: 999px;
       font-weight: 800;
@@ -287,11 +231,7 @@
       color: var(--secondary);
       box-shadow: var(--shadow);
     }
-
-    .category-btn.active {
-      background: linear-gradient(135deg, var(--secondary), #7ab8ff);
-      color: white;
-    }
+    .category-btn.active { background: linear-gradient(135deg, var(--secondary), #7ab8ff); color: white; }
 
     .category-tag {
       display: inline-block;
@@ -334,15 +274,8 @@
       text-align: center;
     }
 
-    .option-btn.correct {
-      border-color: var(--success);
-      background: #f0fff7;
-    }
-
-    .option-btn.wrong {
-      border-color: var(--danger);
-      background: #fff3f3;
-    }
+    .option-btn.correct { border-color: var(--success); background: #f0fff7; }
+    .option-btn.wrong { border-color: var(--danger); background: #fff3f3; }
 
     .option-image {
       width: 100%;
@@ -353,10 +286,7 @@
       background: #eef5ff;
     }
 
-    .option-label {
-      font-size: 1.2rem;
-      font-weight: 900;
-    }
+    .option-label { font-size: 1.2rem; font-weight: 900; }
 
     .feedback {
       min-height: 44px;
@@ -365,19 +295,10 @@
       font-weight: 900;
       margin-top: 16px;
     }
+    .feedback.success { color: var(--success); }
+    .feedback.error { color: var(--danger); }
 
-    .feedback.success {
-      color: var(--success);
-    }
-
-    .feedback.error {
-      color: var(--danger);
-    }
-
-    .admin-layout {
-      grid-template-columns: 1fr;
-    }
-
+    .admin-layout { grid-template-columns: 1fr; }
     .admin-header {
       display: flex;
       flex-direction: column;
@@ -419,31 +340,17 @@
       box-shadow: 0 0 0 4px rgba(91, 156, 255, 0.12);
     }
 
-    .form-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-    .save-btn,
-    .danger-btn {
+    .save-btn, .danger-btn {
       padding: 14px 18px;
       color: white;
       box-shadow: var(--shadow);
     }
+    .save-btn { background: linear-gradient(135deg, var(--success), #56d48b); }
+    .danger-btn { background: linear-gradient(135deg, var(--danger), #ff7e7e); }
 
-    .save-btn {
-      background: linear-gradient(135deg, var(--success), #56d48b);
-    }
-
-    .danger-btn {
-      background: linear-gradient(135deg, var(--danger), #ff7e7e);
-    }
-
-    .animal-list {
-      display: grid;
-      gap: 12px;
-    }
+    .animal-list { display: grid; gap: 12px; }
 
     .animal-row {
       display: grid;
@@ -483,27 +390,16 @@
       word-break: break-all;
     }
 
-    .row-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .row-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 
-    .edit-btn,
-    .delete-btn {
+    .edit-btn, .delete-btn {
       padding: 10px 14px;
       color: white;
       box-shadow: var(--shadow);
       font-size: 0.95rem;
     }
-
-    .edit-btn {
-      background: linear-gradient(135deg, var(--secondary), #8abfff);
-    }
-
-    .delete-btn {
-      background: linear-gradient(135deg, var(--danger), #ff8b8b);
-    }
+    .edit-btn { background: linear-gradient(135deg, var(--secondary), #8abfff); }
+    .delete-btn { background: linear-gradient(135deg, var(--danger), #ff8b8b); }
 
     .empty-state {
       text-align: center;
@@ -512,9 +408,7 @@
       font-weight: 700;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
     .tiny-note {
       text-align: center;
@@ -543,59 +437,30 @@
       box-shadow: var(--shadow);
     }
 
+    .color-card {
+      width: min(72vw, 320px);
+      height: min(72vw, 320px);
+      margin: 0 auto 20px;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: 10px solid white;
+    }
+
     @media (min-width: 640px) {
-      .app {
-        padding: 22px;
-      }
-
-      .home-actions {
-        grid-template-columns: 1fr 1fr;
-        max-width: 560px;
-      }
-
-      .learn-actions {
-        grid-template-columns: 1fr 1fr;
-        max-width: 560px;
-      }
-
-      .game-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .admin-form {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .admin-form .full {
-        grid-column: 1 / -1;
-      }
+      .app { padding: 22px; }
+      .home-actions { grid-template-columns: 1fr 1fr; max-width: 560px; }
+      .learn-actions { grid-template-columns: 1fr 1fr; max-width: 560px; }
+      .game-grid { grid-template-columns: repeat(3, 1fr); }
+      .admin-form { grid-template-columns: 1fr 1fr; }
+      .admin-form .full { grid-column: 1 / -1; }
     }
 
     @media (min-width: 900px) {
-      .card {
-        padding: 28px;
-      }
-
-      .learn-layout {
-        grid-template-columns: 1.15fr 0.85fr;
-        align-items: center;
-      }
-
-      .animal-name {
-        margin-top: 0;
-      }
-
-      .admin-layout {
-        grid-template-columns: 0.95fr 1.05fr;
-        align-items: start;
-      }
-
-      .admin-form-panel,
-      .admin-list-panel {
-        background: rgba(255,255,255,0.75);
-        border-radius: 24px;
-        padding: 16px;
-      }
+      .card { padding: 28px; }
+      .learn-layout { grid-template-columns: 1.15fr 0.85fr; align-items: center; }
+      .animal-name { margin-top: 0; }
+      .admin-layout { grid-template-columns: 0.95fr 1.05fr; align-items: start; }
+      .admin-form-panel, .admin-list-panel { background: rgba(255,255,255,0.75); border-radius: 24px; padding: 16px; }
     }
   </style>
 </head>
@@ -625,6 +490,7 @@
           <button class="primary-btn" id="startLearnBtn" type="button">Bắt Đầu Học</button>
           <button class="secondary-btn" id="startGameBtn" type="button">Trò Chơi</button>
           <button class="primary-btn" id="startNumbersBtn" type="button">Học Đếm 1–10</button>
+          <button class="secondary-btn" id="startColorsBtn" type="button">Học 7 Màu Sắc</button>
         </div>
       </div>
     </section>
@@ -644,9 +510,7 @@
               <button class="nav-btn" id="prevAnimalBtn" type="button">👈 Con trước đó</button>
               <button class="nav-btn" id="nextAnimalBtn" type="button">👉 Con tiếp theo</button>
             </div>
-            <div id="learnImageWarning" class="image-warning hidden">
-              Ảnh hiện tại có thể bị sai hoặc không tải được.
-            </div>
+            <div id="learnImageWarning" class="image-warning hidden">Ảnh hiện tại có thể bị sai hoặc không tải được.</div>
             <div class="image-warning">
               <div><strong>Tên hiện tại:</strong> <span id="currentAnimalNameText"></span></div>
               <label class="field-label" for="learnNameInput" style="margin-top:10px;">Cập nhật tên con vật</label>
@@ -677,6 +541,22 @@
             <button class="speak-btn" id="speakNumberBtn" type="button">🔊 Đọc số</button>
             <button class="nav-btn" id="prevNumberBtn" type="button">👈 Số trước</button>
             <button class="nav-btn" id="nextNumberBtn" type="button">👉 Số tiếp theo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="colorsScreen">
+      <div class="card">
+        <button class="back-btn" id="backFromColorsBtn" type="button">← Quay lại</button>
+        <h2 class="section-title">Bé Học 7 Màu Sắc</h2>
+        <div class="animal-image-wrap" style="max-width: 720px; margin: 0 auto; text-align: center;">
+          <div id="colorDisplay" class="color-card"></div>
+          <div id="colorLabel" class="animal-name" style="margin-top: 0;">Đỏ</div>
+          <div class="learn-actions">
+            <button class="speak-btn" id="speakColorBtn" type="button">🔊 Đọc màu</button>
+            <button class="nav-btn" id="prevColorBtn" type="button">👈 Màu trước</button>
+            <button class="nav-btn" id="nextColorBtn" type="button">👉 Màu tiếp theo</button>
           </div>
         </div>
       </div>
@@ -858,11 +738,13 @@
     let selectedAdminCategory = "all";
     let selectedGameCategory = "all";
     let currentNumberIndex = 0;
+    let currentColorIndex = 0;
 
     const screens = {
       home: document.getElementById("homeScreen"),
       learn: document.getElementById("learnScreen"),
       numbers: document.getElementById("numbersScreen"),
+      colors: document.getElementById("colorsScreen"),
       game: document.getElementById("gameScreen"),
       admin: document.getElementById("adminScreen")
     };
@@ -870,6 +752,7 @@
     const startLearnBtn = document.getElementById("startLearnBtn");
     const startGameBtn = document.getElementById("startGameBtn");
     const startNumbersBtn = document.getElementById("startNumbersBtn");
+    const startColorsBtn = document.getElementById("startColorsBtn");
     const adminTopBtn = document.getElementById("adminTopBtn");
 
     const learnImage = document.getElementById("learnImage");
@@ -894,6 +777,13 @@
     const nextNumberBtn = document.getElementById("nextNumberBtn");
     const backFromNumbersBtn = document.getElementById("backFromNumbersBtn");
 
+    const colorDisplay = document.getElementById("colorDisplay");
+    const colorLabel = document.getElementById("colorLabel");
+    const speakColorBtn = document.getElementById("speakColorBtn");
+    const prevColorBtn = document.getElementById("prevColorBtn");
+    const nextColorBtn = document.getElementById("nextColorBtn");
+    const backFromColorsBtn = document.getElementById("backFromColorsBtn");
+
     const gameQuestion = document.getElementById("gameQuestion");
     const repeatQuestionBtn = document.getElementById("repeatQuestionBtn");
     const newRoundBtn = document.getElementById("newRoundBtn");
@@ -916,70 +806,34 @@
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (!saved) return [...defaultAnimals];
-
         const parsed = JSON.parse(saved);
-        if (!Array.isArray(parsed) || parsed.length === 0) {
-          return [...defaultAnimals];
-        }
-
-        const normalizedSaved = parsed
-          .filter(item => item && item.name && item.image)
-          .map(item => ({
-            name: item.name,
-            image: item.image,
-            category: item.category || "land"
-          }));
-
+        if (!Array.isArray(parsed) || parsed.length === 0) return [...defaultAnimals];
+        const normalizedSaved = parsed.filter(item => item && item.name && item.image).map(item => ({ name: item.name, image: item.image, category: item.category || "land" }));
         const mergedAnimals = [...normalizedSaved];
-        const existingKeys = new Set(
-          normalizedSaved.map(item => (item.name || "").trim().toLowerCase())
-        );
-
-        defaultAnimals.forEach(item => {
-          const key = (item.name || "").trim().toLowerCase();
-          if (!existingKeys.has(key)) {
-            mergedAnimals.push({ ...item });
-          }
-        });
-
+        const existingKeys = new Set(normalizedSaved.map(item => (item.name || "").trim().toLowerCase()));
+        defaultAnimals.forEach(item => { const key = (item.name || "").trim().toLowerCase(); if (!existingKeys.has(key)) mergedAnimals.push({ ...item }); });
         return mergedAnimals;
       } catch (error) {
         return [...defaultAnimals];
       }
     }
 
-    function saveAnimals() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
-    }
-
-    function getCategoryLabel(category) {
-      if (category === "water") return "Dưới nước";
-      if (category === "sky") return "Trên trời";
-      return "Trên cạn";
-    }
-
-    function getFilteredAnimals(category) {
-      if (category === "all") return animals;
-      return animals.filter(animal => animal.category === category);
-    }
+    function saveAnimals() { localStorage.setItem(STORAGE_KEY, JSON.stringify(animals)); }
+    function getCategoryLabel(category) { if (category === "water") return "Dưới nước"; if (category === "sky") return "Trên trời"; return "Trên cạn"; }
+    function getFilteredAnimals(category) { if (category === "all") return animals; return animals.filter(animal => animal.category === category); }
 
     function updateCategoryButtons(container, activeCategory) {
       if (!container) return;
-      container.querySelectorAll(".category-btn").forEach(button => {
-        button.classList.toggle("active", button.dataset.category === activeCategory);
-      });
+      container.querySelectorAll(".category-btn").forEach(button => button.classList.toggle("active", button.dataset.category === activeCategory));
     }
 
     function showScreen(name) {
-      Object.keys(screens).forEach(key => {
-        screens[key].classList.toggle("active", key === name);
-      });
+      Object.keys(screens).forEach(key => screens[key].classList.toggle("active", key === name));
       currentScreen = name;
     }
 
     function renderLearnAnimal() {
       const filteredAnimals = getFilteredAnimals(selectedCategory);
-
       if (!filteredAnimals.length) {
         learnImage.src = "";
         learnImage.alt = "Chưa có con vật";
@@ -991,7 +845,6 @@
         learnImageWarning.classList.add("hidden");
         return;
       }
-
       currentAnimalIndex = ((currentAnimalIndex % filteredAnimals.length) + filteredAnimals.length) % filteredAnimals.length;
       const animal = filteredAnimals[currentAnimalIndex];
       learnImage.src = animal.image;
@@ -1009,23 +862,16 @@
     }
 
     function normalizeVietnameseText(text) {
-      return String(text || "")
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, " ");
+      return String(text || "").trim().toLowerCase().replace(/\s+/g, " ");
     }
 
     function playVtudienAudio(text) {
       const normalizedText = normalizeVietnameseText(text);
-
       if (!normalizedText) return;
-
       const audioUrl = "https://vtudien.com/doc/viet/" + encodeURIComponent(normalizedText) + ".mp3";
       const audio = new Audio(audioUrl);
       audio.playbackRate = 1;
-      audio.play().catch(function() {
-        alert("Không thể phát âm thanh từ vtudien.com cho từ: " + text);
-      });
+      audio.play().catch(function() { alert("Không thể phát âm thanh từ vtudien.com cho từ: " + text); });
     }
 
     const numbers = [
@@ -1041,10 +887,19 @@
       { value: 10, label: "Mười", color: "#ff006e", shadow: "#ffd0e4" }
     ];
 
+    const colors = [
+      { name: "Đỏ", value: "#ff4d4f", glow: "#ffd4d4" },
+      { name: "Cam", value: "#ff9f1c", glow: "#ffe3bf" },
+      { name: "Vàng", value: "#ffd60a", glow: "#fff3b0" },
+      { name: "Xanh lá", value: "#38b000", glow: "#d9f7be" },
+      { name: "Xanh dương", value: "#3a86ff", glow: "#d6e8ff" },
+      { name: "Tím", value: "#8338ec", glow: "#e7d7ff" },
+      { name: "Hồng", value: "#ff4fa3", glow: "#ffd3e8" }
+    ];
+
     function renderCurrentNumber() {
       const item = numbers[currentNumberIndex];
       if (!item) return;
-
       numberDisplay.textContent = item.value;
       numberDisplay.style.color = item.color;
       numberDisplay.style.textShadow = "0 8px 24px " + item.shadow;
@@ -1054,34 +909,37 @@
       nextNumberBtn.disabled = currentNumberIndex === numbers.length - 1;
     }
 
-    function speakCurrentNumber() {
-      const item = numbers[currentNumberIndex];
+    function renderCurrentColor() {
+      const item = colors[currentColorIndex];
       if (!item) return;
-      playVtudienAudio(item.label);
+      colorDisplay.style.background = item.value;
+      colorDisplay.style.boxShadow = "0 18px 40px " + item.glow;
+      colorLabel.textContent = item.name;
+      colorLabel.style.color = item.value;
+      colorLabel.style.textShadow = "0 6px 18px " + item.glow;
+      prevColorBtn.disabled = currentColorIndex === 0;
+      nextColorBtn.disabled = currentColorIndex === colors.length - 1;
     }
+
+    function speakCurrentNumber() { const item = numbers[currentNumberIndex]; if (item) playVtudienAudio(item.label); }
+    function speakCurrentColor() { const item = colors[currentColorIndex]; if (item) playVtudienAudio(item.name); }
 
     function beep(frequency, duration, type) {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) return;
-
       const audioContext = new AudioContextClass();
       const oscillator = audioContext.createOscillator();
       const gain = audioContext.createGain();
-
       oscillator.type = type || "sine";
       oscillator.frequency.value = frequency;
       gain.gain.setValueAtTime(0.001, audioContext.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.18, audioContext.currentTime + 0.02);
       gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
-
       oscillator.connect(gain);
       gain.connect(audioContext.destination);
       oscillator.start();
       oscillator.stop(audioContext.currentTime + duration / 1000 + 0.03);
-
-      oscillator.onended = function() {
-        audioContext.close();
-      };
+      oscillator.onended = function() { audioContext.close(); };
     }
 
     function playPraiseSound() {
@@ -1113,7 +971,6 @@
 
     function createGameRound() {
       const sourceAnimals = getFilteredAnimals(selectedGameCategory);
-
       if (sourceAnimals.length < 3) {
         gameGrid.innerHTML = "";
         gameQuestion.textContent = "Cần ít nhất 3 con vật trong nhóm này để chơi trò chơi.";
@@ -1122,16 +979,13 @@
         repeatQuestionBtn.disabled = true;
         return;
       }
-
       repeatQuestionBtn.disabled = false;
       gameFeedback.textContent = "";
       gameFeedback.className = "feedback";
-
       const shuffled = shuffle(sourceAnimals);
       gameOptions = shuffled.slice(0, 3);
       correctAnimalIndexInOptions = Math.floor(Math.random() * 3);
       currentQuestionAnimal = gameOptions[correctAnimalIndexInOptions];
-
       gameQuestion.textContent = "Con " + currentQuestionAnimal.name.toLowerCase() + " ở đâu?";
       renderGameOptions();
       playVtudienAudio(currentQuestionAnimal.name);
@@ -1139,7 +993,6 @@
 
     function renderGameOptions() {
       gameGrid.innerHTML = "";
-
       gameOptions.forEach((animal, index) => {
         const button = document.createElement("button");
         button.type = "button";
@@ -1149,12 +1002,8 @@
           <div class="option-label">${animal.name}</div>
         `;
         const optionImage = button.querySelector(".option-image");
-        optionImage.addEventListener("error", function() {
-          handleImageLoadError(optionImage, animal.name);
-        });
-        button.addEventListener("click", function() {
-          checkGameAnswer(index, button);
-        });
+        optionImage.addEventListener("error", function() { handleImageLoadError(optionImage, animal.name); });
+        button.addEventListener("click", function() { checkGameAnswer(index, button); });
         gameGrid.appendChild(button);
       });
     }
@@ -1162,7 +1011,6 @@
     function checkGameAnswer(selectedIndex, buttonElement) {
       const optionButtons = Array.from(gameGrid.querySelectorAll(".option-btn"));
       optionButtons.forEach(btn => btn.disabled = true);
-
       if (selectedIndex === correctAnimalIndexInOptions) {
         buttonElement.classList.add("correct");
         gameFeedback.textContent = "⭐⭐⭐ Giỏi lắm!";
@@ -1174,18 +1022,13 @@
         gameFeedback.textContent = "Thử lại nhé!";
         gameFeedback.className = "feedback error";
       }
-
-      setTimeout(() => {
-        createGameRound();
-      }, 1800);
+      setTimeout(() => { createGameRound(); }, 1800);
     }
 
     function renderAdminList() {
       const adminAnimals = selectedAdminCategory === "all"
         ? animals.map((animal, index) => ({ animal, index }))
-        : animals
-            .map((animal, index) => ({ animal, index }))
-            .filter(item => item.animal.category === selectedAdminCategory);
+        : animals.map((animal, index) => ({ animal, index })).filter(item => item.animal.category === selectedAdminCategory);
 
       if (!adminAnimals.length) {
         adminList.innerHTML = '<div class="empty-state">Chưa có động vật nào trong nhóm này.</div>';
@@ -1241,43 +1084,27 @@
         alert("Cần giữ ít nhất 1 con vật trong danh sách.");
         return;
       }
-
       animals.splice(index, 1);
       saveAnimals();
       renderAdminList();
-
       const learnAnimals = getFilteredAnimals(selectedCategory);
-      if (currentAnimalIndex >= learnAnimals.length) {
-        currentAnimalIndex = 0;
-      }
-
+      if (currentAnimalIndex >= learnAnimals.length) currentAnimalIndex = 0;
       renderLearnAnimal();
-
-      if (currentScreen === "game") {
-        createGameRound();
-      }
+      if (currentScreen === "game") createGameRound();
     }
 
     function addOrUpdateAnimal(event) {
       event.preventDefault();
-
       const name = animalNameInput.value.trim();
       const image = animalImageInput.value.trim();
       const category = animalCategoryInput.value;
-
       if (!name || !image || !category) {
         alert("Vui lòng nhập đủ tên, link ảnh và phân loại.");
         return;
       }
-
       const newAnimal = { name, image, category };
-
-      if (editingIndex === null) {
-        animals.push(newAnimal);
-      } else {
-        animals[editingIndex] = newAnimal;
-      }
-
+      if (editingIndex === null) animals.push(newAnimal);
+      else animals[editingIndex] = newAnimal;
       saveAnimals();
       renderAdminList();
       renderLearnAnimal();
@@ -1291,16 +1118,14 @@
       updateCategoryButtons(gameCategoryBar, selectedGameCategory);
       renderLearnAnimal();
       renderCurrentNumber();
+      renderCurrentColor();
       renderAdminList();
       showScreen("home");
     }
 
     startLearnBtn.addEventListener("click", function() {
       const filteredAnimals = getFilteredAnimals(selectedCategory);
-      if (!filteredAnimals.length) {
-        alert("Chưa có con vật nào trong nhóm này để học.");
-        return;
-      }
+      if (!filteredAnimals.length) { alert("Chưa có con vật nào trong nhóm này để học."); return; }
       renderLearnAnimal();
       showScreen("learn");
       playVtudienAudio(filteredAnimals[currentAnimalIndex].name);
@@ -1315,6 +1140,12 @@
       renderCurrentNumber();
       showScreen("numbers");
       speakCurrentNumber();
+    });
+
+    startColorsBtn.addEventListener("click", function() {
+      renderCurrentColor();
+      showScreen("colors");
+      speakCurrentColor();
     });
 
     adminTopBtn.addEventListener("click", function() {
@@ -1345,33 +1176,18 @@
       if (!button) return;
       selectedGameCategory = button.dataset.category;
       updateCategoryButtons(gameCategoryBar, selectedGameCategory);
-      if (currentScreen === "game") {
-        createGameRound();
-      }
+      if (currentScreen === "game") createGameRound();
     });
 
-    backFromLearnBtn.addEventListener("click", function() {
-      showScreen("home");
-    });
-
-    backFromNumbersBtn.addEventListener("click", function() {
-      showScreen("home");
-    });
-
-    backFromGameBtn.addEventListener("click", function() {
-      showScreen("home");
-    });
-
-    backFromAdminBtn.addEventListener("click", function() {
-      resetAdminForm();
-      showScreen("home");
-    });
+    backFromLearnBtn.addEventListener("click", function() { showScreen("home"); });
+    backFromNumbersBtn.addEventListener("click", function() { showScreen("home"); });
+    backFromColorsBtn.addEventListener("click", function() { showScreen("home"); });
+    backFromGameBtn.addEventListener("click", function() { showScreen("home"); });
+    backFromAdminBtn.addEventListener("click", function() { resetAdminForm(); showScreen("home"); });
 
     speakBtn.addEventListener("click", function() {
       const filteredAnimals = getFilteredAnimals(selectedCategory);
-      if (filteredAnimals[currentAnimalIndex]) {
-        playVtudienAudio(filteredAnimals[currentAnimalIndex].name);
-      }
+      if (filteredAnimals[currentAnimalIndex]) playVtudienAudio(filteredAnimals[currentAnimalIndex].name);
     });
 
     learnImage.addEventListener("error", function() {
@@ -1384,24 +1200,14 @@
       const filteredAnimals = getFilteredAnimals(selectedCategory);
       const currentAnimal = filteredAnimals[currentAnimalIndex];
       if (!currentAnimal) return -1;
-
-      return animals.findIndex(animal =>
-        animal.name === currentAnimal.name &&
-        animal.image === currentAnimal.image &&
-        animal.category === currentAnimal.category
-      );
+      return animals.findIndex(animal => animal.name === currentAnimal.name && animal.image === currentAnimal.image && animal.category === currentAnimal.category);
     }
 
     fixCurrentNameBtn.addEventListener("click", function() {
       const realIndex = getCurrentLearnAnimalIndex();
       if (realIndex === -1) return;
-
       const trimmedName = (learnNameInput.value || "").trim();
-      if (!trimmedName) {
-        alert("Tên con vật không được để trống.");
-        return;
-      }
-
+      if (!trimmedName) { alert("Tên con vật không được để trống."); return; }
       animals[realIndex].name = trimmedName;
       saveAnimals();
       renderLearnAnimal();
@@ -1411,14 +1217,8 @@
     fixCurrentImageBtn.addEventListener("click", function() {
       const realIndex = getCurrentLearnAnimalIndex();
       if (realIndex === -1) return;
-
       const trimmedUrl = (learnImageUrlInput.value || "").trim();
-
-      if (!trimmedUrl) {
-        alert("URL ảnh không được để trống.");
-        return;
-      }
-
+      if (!trimmedUrl) { alert("URL ảnh không được để trống."); return; }
       animals[realIndex].image = trimmedUrl;
       saveAnimals();
       renderLearnAnimal();
@@ -1432,9 +1232,7 @@
       currentAnimalIndex = (currentAnimalIndex - 1 + filteredAnimals.length) % filteredAnimals.length;
       renderLearnAnimal();
       const prevAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
-      if (prevAnimal) {
-        playVtudienAudio(prevAnimal.name);
-      }
+      if (prevAnimal) playVtudienAudio(prevAnimal.name);
     });
 
     nextAnimalBtn.addEventListener("click", function() {
@@ -1443,61 +1241,40 @@
       currentAnimalIndex = (currentAnimalIndex + 1) % filteredAnimals.length;
       renderLearnAnimal();
       const nextAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
-      if (nextAnimal) {
-        playVtudienAudio(nextAnimal.name);
-      }
+      if (nextAnimal) playVtudienAudio(nextAnimal.name);
     });
 
-    speakNumberBtn.addEventListener("click", function() {
-      speakCurrentNumber();
-    });
-
+    speakNumberBtn.addEventListener("click", speakCurrentNumber);
     prevNumberBtn.addEventListener("click", function() {
-      if (currentNumberIndex > 0) {
-        currentNumberIndex -= 1;
-        renderCurrentNumber();
-        speakCurrentNumber();
-      }
+      if (currentNumberIndex > 0) { currentNumberIndex -= 1; renderCurrentNumber(); speakCurrentNumber(); }
+    });
+    nextNumberBtn.addEventListener("click", function() {
+      if (currentNumberIndex < numbers.length - 1) { currentNumberIndex += 1; renderCurrentNumber(); speakCurrentNumber(); }
     });
 
-    nextNumberBtn.addEventListener("click", function() {
-      if (currentNumberIndex < numbers.length - 1) {
-        currentNumberIndex += 1;
-        renderCurrentNumber();
-        speakCurrentNumber();
-      }
+    speakColorBtn.addEventListener("click", speakCurrentColor);
+    prevColorBtn.addEventListener("click", function() {
+      if (currentColorIndex > 0) { currentColorIndex -= 1; renderCurrentColor(); speakCurrentColor(); }
+    });
+    nextColorBtn.addEventListener("click", function() {
+      if (currentColorIndex < colors.length - 1) { currentColorIndex += 1; renderCurrentColor(); speakCurrentColor(); }
     });
 
     repeatQuestionBtn.addEventListener("click", function() {
-      if (currentQuestionAnimal) {
-        playVtudienAudio(currentQuestionAnimal.name);
-      }
+      if (currentQuestionAnimal) playVtudienAudio(currentQuestionAnimal.name);
     });
 
-    newRoundBtn.addEventListener("click", function() {
-      createGameRound();
-    });
-
+    newRoundBtn.addEventListener("click", function() { createGameRound(); });
     adminForm.addEventListener("submit", addOrUpdateAnimal);
-
-    cancelEditBtn.addEventListener("click", function() {
-      resetAdminForm();
-    });
+    cancelEditBtn.addEventListener("click", function() { resetAdminForm(); });
 
     adminList.addEventListener("click", function(event) {
       const button = event.target.closest("button[data-action]");
       if (!button) return;
-
       const index = Number(button.dataset.index);
       const action = button.dataset.action;
-
-      if (action === "edit") {
-        startEditAnimal(index);
-      }
-
-      if (action === "delete") {
-        deleteAnimal(index);
-      }
+      if (action === "edit") startEditAnimal(index);
+      if (action === "delete") deleteAnimal(index);
     });
 
     initializeApp();
