@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bé Học Con Vật</title>
+  <style>
+    :root {
+      --bg: linear-gradient(180deg, #fff8e7 0%, #e6f7ff 100%);
+      --card: rgba(255, 255, 255, 0.92);
+      --primary: #ff8a00;
+      --secondary: #5b9cff;
+      --accent: #ff4fa3;
+      --success: #24b36b;
+      --danger: #ff5c5c;
+      --text: #354052;
+      --shadow: 0 12px 30px rgba(42, 84, 140, 0.16);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Arial", "Helvetica", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .brand-mini {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--secondary);
+      background: rgba(255,255,255,0.8);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .admin-top-btn,
+    .back-btn,
+    .nav-btn,
+    .speak-btn,
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn,
+    .save-btn,
+    .edit-btn,
+    .delete-btn,
+    .option-btn {
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      font-weight: 800;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .admin-top-btn,
+    .back-btn {
+      background: white;
+      color: var(--secondary);
+      padding: 10px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .card {
+      width: 100%;
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .home-card {
+      text-align: center;
+      padding: 28px 20px 34px;
+    }
+
+    .logo {
+      font-size: clamp(2rem, 7vw, 4.2rem);
+      font-weight: 900;
+      color: var(--primary);
+      margin: 6px 0 10px;
+      line-height: 1.15;
+      text-shadow: 0 4px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      color: #60708a;
+      margin-bottom: 24px;
+    }
+
+    .hero-animals {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(70px, 1fr));
+      gap: 12px;
+      max-width: 420px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-bubble {
+      background: white;
+      border-radius: 24px;
+      padding: 12px;
+      font-size: clamp(2rem, 7vw, 3rem);
+      box-shadow: var(--shadow);
+    }
+
+    .home-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      padding: 18px 20px;
+      font-size: clamp(1.05rem, 3vw, 1.3rem);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--primary), #ffb347);
+    }
+
+    .secondary-btn {
+      background: linear-gradient(135deg, var(--secondary), #7ab8ff);
+    }
+
+    .learn-layout,
+    .game-layout,
+    .admin-layout {
+      display: grid;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .learn-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .animal-image-wrap {
+      background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      box-shadow: inset 0 0 0 3px rgba(91, 156, 255, 0.08);
+      text-align: center;
+    }
+
+    .animal-image {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 24px;
+      display: block;
+      box-shadow: var(--shadow);
+      background: #eef5ff;
+    }
+
+    .animal-name {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      text-align: center;
+      color: var(--accent);
+      margin: 18px 0 8px;
+      font-weight: 900;
+    }
+
+    .learn-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .speak-btn,
+    .nav-btn {
+      padding: 16px 20px;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .speak-btn {
+      background: linear-gradient(135deg, #a84dff, #d37fff);
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, var(--success), #58d68d);
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      font-weight: 900;
+      text-align: center;
+      color: var(--secondary);
+      margin: 0 0 14px;
+    }
+
+    .game-question {
+      text-align: center;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #52627b;
+    }
+
+    .game-toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .option-btn {
+      background: white;
+      padding: 14px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      border: 4px solid transparent;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background: #f0fff7;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: #fff3f3;
+    }
+
+    .option-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      background: #eef5ff;
+    }
+
+    .option-label {
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .feedback {
+      min-height: 44px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-top: 16px;
+    }
+
+    .feedback.success {
+      color: var(--success);
+    }
+
+    .feedback.error {
+      color: var(--danger);
+    }
+
+    .admin-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .admin-form {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+      background: #fff;
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: inset 0 0 0 2px rgba(255, 138, 0, 0.08);
+    }
+
+    .field-label {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #63748f;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 2px solid #dfe9f8;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .text-input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(91, 156, 255, 0.12);
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .save-btn,
+    .danger-btn {
+      padding: 14px 18px;
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, var(--success), #56d48b);
+    }
+
+    .danger-btn {
+      background: linear-gradient(135deg, var(--danger), #ff7e7e);
+    }
+
+    .animal-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .animal-row {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 12px;
+      align-items: center;
+      background: white;
+      border-radius: 22px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .animal-thumb {
+      width: 84px;
+      height: 84px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #eef5ff;
+    }
+
+    .animal-row-main {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .animal-row-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .animal-row-url {
+      font-size: 0.9rem;
+      color: #6f8098;
+      word-break: break-all;
+    }
+
+    .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      padding: 10px 14px;
+      color: white;
+      box-shadow: var(--shadow);
+      font-size: 0.95rem;
+    }
+
+    .edit-btn {
+      background: linear-gradient(135deg, var(--secondary), #8abfff);
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, var(--danger), #ff8b8b);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 18px;
+      color: #72839d;
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .tiny-note {
+      text-align: center;
+      color: #7a8ba5;
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .image-warning {
+      margin: 12px auto 0;
+      max-width: 420px;
+      background: #fff4e5;
+      color: #a95b00;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .fix-image-btn {
+      margin-top: 10px;
+      background: linear-gradient(135deg, var(--accent), #ff8cc2);
+      color: white;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    @media (min-width: 640px) {
+      .app {
+        padding: 22px;
+      }
+
+      .home-actions {
+        grid-template-columns: 1fr 1fr;
+        max-width: 560px;
+      }
+
+      .learn-actions {
+        grid-template-columns: 1fr 1fr;
+        max-width: 560px;
+      }
+
+      .game-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .admin-form {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .admin-form .full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .card {
+        padding: 28px;
+      }
+
+      .learn-layout {
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+      }
+
+      .animal-name {
+        margin-top: 0;
+      }
+
+      .admin-layout {
+        grid-template-columns: 0.95fr 1.05fr;
+        align-items: start;
+      }
+
+      .admin-form-panel,
+      .admin-list-panel {
+        background: rgba(255,255,255,0.75);
+        border-radius: 24px;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand-mini">🐾 Bé Học Con Vật</div>
+      <button class="admin-top-btn" id="adminTopBtn" type="button">⚙️ Admin</button>
+    </div>
+
+    <section class="screen active" id="homeScreen">
+      <div class="card home-card">
+        <div class="hero-animals">
+          <div class="hero-bubble">🐶</div>
+          <div class="hero-bubble">🐱</div>
+          <div class="hero-bubble">🐘</div>
+        </div>
+        <h1 class="logo">Bé Học Con Vật</h1>
+        <p class="subtitle">Học tên con vật bằng hình ảnh thật, âm thanh và trò chơi vui nhộn.</p>
+        <div class="home-actions">
+          <button class="primary-btn" id="startLearnBtn" type="button">Bắt Đầu Học</button>
+          <button class="secondary-btn" id="startGameBtn" type="button">Trò Chơi</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="learnScreen">
+      <div class="card">
+        <div class="learn-layout">
+          <div class="animal-image-wrap">
+            <img id="learnImage" class="animal-image" src="" alt="Ảnh con vật" />
+          </div>
+          <div>
+            <button class="back-btn" id="backFromLearnBtn" type="button">← Quay lại</button>
+            <h2 id="learnName" class="animal-name">Chó</h2>
+            <div class="learn-actions">
+              <button class="speak-btn" id="speakBtn" type="button">🔊 Phát âm</button>
+              <button class="nav-btn" id="nextAnimalBtn" type="button">👉 Con tiếp theo</button>
+            </div>
+            <div id="learnImageWarning" class="image-warning hidden">
+              Ảnh hiện tại có thể bị sai hoặc không tải được.<br />
+              <button class="fix-image-btn" id="fixCurrentImageBtn" type="button">🛠️ Sửa hình ảnh này</button>
+            </div>
+            <p class="tiny-note">Bé có thể nghe tên con vật và xem ảnh lớn thật rõ ràng.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="gameScreen">
+      <div class="card">
+        <button class="back-btn" id="backFromGameBtn" type="button">← Quay lại</button>
+        <h2 class="section-title">Trò Chơi Tìm Con Vật</h2>
+        <div class="game-toolbar">
+          <button class="speak-btn" id="repeatQuestionBtn" type="button">🔊 Đọc lại câu hỏi</button>
+          <button class="nav-btn" id="newRoundBtn" type="button">🎲 Câu mới</button>
+        </div>
+        <div id="gameQuestion" class="game-question">Con mèo ở đâu?</div>
+        <div id="gameGrid" class="game-grid"></div>
+        <div id="gameFeedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="adminScreen">
+      <div class="card">
+        <button class="back-btn" id="backFromAdminBtn" type="button">← Quay lại</button>
+        <div class="admin-header">
+          <h2 class="section-title">Quản Trị Động Vật</h2>
+          <div class="tiny-note">Thêm, sửa, xóa động vật. Dữ liệu được lưu trong LocalStorage.</div>
+        </div>
+
+        <div class="admin-layout">
+          <div class="admin-form-panel">
+            <form id="adminForm" class="admin-form">
+              <div class="full">
+                <label class="field-label" for="animalNameInput">Tên con vật</label>
+                <input class="text-input" id="animalNameInput" type="text" placeholder="Ví dụ: Thỏ" required />
+              </div>
+              <div class="full">
+                <label class="field-label" for="animalImageInput">Link ảnh</label>
+                <input class="text-input" id="animalImageInput" type="url" placeholder="https://..." required />
+              </div>
+              <div class="full form-actions">
+                <button class="save-btn" id="saveAnimalBtn" type="submit">💾 Lưu động vật</button>
+                <button class="danger-btn hidden" id="cancelEditBtn" type="button">✖ Hủy sửa</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="admin-list-panel">
+            <div id="adminList" class="animal-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const defaultAnimals = [
+      {
+        name: "Chó",
+        image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Mèo",
+        image: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Gà",
+        image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Vịt",
+        image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Bò",
+        image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Heo",
+        image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Ngựa",
+        image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Voi",
+        image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Sư tử",
+        image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        name: "Khỉ",
+        image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
+
+    const STORAGE_KEY = "be-hoc-con-vat-animals";
+
+    let animals = loadAnimals();
+    let currentAnimalIndex = 0;
+    let editingIndex = null;
+    let currentScreen = "home";
+    let gameOptions = [];
+    let correctAnimalIndexInOptions = -1;
+    let currentQuestionAnimal = null;
+
+    const screens = {
+      home: document.getElementById("homeScreen"),
+      learn: document.getElementById("learnScreen"),
+      game: document.getElementById("gameScreen"),
+      admin: document.getElementById("adminScreen")
+    };
+
+    const startLearnBtn = document.getElementById("startLearnBtn");
+    const startGameBtn = document.getElementById("startGameBtn");
+    const adminTopBtn = document.getElementById("adminTopBtn");
+
+    const learnImage = document.getElementById("learnImage");
+    const learnName = document.getElementById("learnName");
+    const speakBtn = document.getElementById("speakBtn");
+    const nextAnimalBtn = document.getElementById("nextAnimalBtn");
+    const backFromLearnBtn = document.getElementById("backFromLearnBtn");
+    const learnImageWarning = document.getElementById("learnImageWarning");
+    const fixCurrentImageBtn = document.getElementById("fixCurrentImageBtn");
+
+    const gameQuestion = document.getElementById("gameQuestion");
+    const repeatQuestionBtn = document.getElementById("repeatQuestionBtn");
+    const newRoundBtn = document.getElementById("newRoundBtn");
+    const gameGrid = document.getElementById("gameGrid");
+    const gameFeedback = document.getElementById("gameFeedback");
+    const backFromGameBtn = document.getElementById("backFromGameBtn");
+
+    const backFromAdminBtn = document.getElementById("backFromAdminBtn");
+    const adminForm = document.getElementById("adminForm");
+    const animalNameInput = document.getElementById("animalNameInput");
+    const animalImageInput = document.getElementById("animalImageInput");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+    const adminList = document.getElementById("adminList");
+
+    function loadAnimals() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return [...defaultAnimals];
+        const parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          return [...defaultAnimals];
+        }
+        return parsed.filter(item => item && item.name && item.image);
+      } catch (error) {
+        return [...defaultAnimals];
+      }
+    }
+
+    function saveAnimals() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
+    }
+
+    function showScreen(name) {
+      Object.keys(screens).forEach(key => {
+        screens[key].classList.toggle("active", key === name);
+      });
+      currentScreen = name;
+    }
+
+    function renderLearnAnimal() {
+      if (!animals.length) {
+        learnImage.src = "";
+        learnImage.alt = "Chưa có con vật";
+        learnName.textContent = "Chưa có con vật";
+        speakBtn.disabled = true;
+        nextAnimalBtn.disabled = true;
+        learnImageWarning.classList.add("hidden");
+        return;
+      }
+
+      currentAnimalIndex = ((currentAnimalIndex % animals.length) + animals.length) % animals.length;
+      const animal = animals[currentAnimalIndex];
+      learnImage.src = animal.image;
+      learnImage.alt = animal.name;
+      learnName.textContent = animal.name;
+      speakBtn.disabled = false;
+      nextAnimalBtn.disabled = animals.length <= 1;
+      learnImageWarning.classList.add("hidden");
+    }
+
+    function normalizeVietnameseText(text) {
+      return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+
+    function playVtudienAudio(text) {
+      const normalizedText = normalizeVietnameseText(text);
+
+      if (!normalizedText) return;
+
+      const audioUrl = "https://vtudien.com/doc/viet/" + encodeURIComponent(normalizedText) + ".mp3";
+      const audio = new Audio(audioUrl);
+      audio.playbackRate = 1;
+      audio.play().catch(function() {
+        alert("Không thể phát âm thanh từ vtudien.com cho từ: " + text);
+      });
+    }
+
+    function beep(frequency, duration, type) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
+      const audioContext = new AudioContextClass();
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      oscillator.type = type || "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.18, audioContext.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
+
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration / 1000 + 0.03);
+
+      oscillator.onended = function() {
+        audioContext.close();
+      };
+    }
+
+    function playPraiseSound() {
+      beep(523.25, 180, "triangle");
+      setTimeout(() => beep(659.25, 180, "triangle"), 180);
+      setTimeout(() => beep(783.99, 260, "triangle"), 360);
+    }
+
+    function handleImageLoadError(imgElement, fallbackLabel) {
+      if (!imgElement) return;
+      imgElement.onerror = null;
+      imgElement.src = "data:image/svg+xml;utf8," + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
+          <rect width="100%" height="100%" rx="32" fill="#eef5ff"/>
+          <text x="50%" y="45%" text-anchor="middle" font-size="44" font-family="Arial" fill="#5b9cff">Ảnh bị lỗi</text>
+          <text x="50%" y="58%" text-anchor="middle" font-size="30" font-family="Arial" fill="#ff4fa3">${fallbackLabel || ""}</text>
+        </svg>
+      `);
+    }
+
+    function shuffle(array) {
+      const cloned = [...array];
+      for (let i = cloned.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cloned[i], cloned[j]] = [cloned[j], cloned[i]];
+      }
+      return cloned;
+    }
+
+    function createGameRound() {
+      if (animals.length < 3) {
+        gameGrid.innerHTML = "";
+        gameQuestion.textContent = "Cần ít nhất 3 con vật để chơi trò chơi.";
+        gameFeedback.textContent = "";
+        gameFeedback.className = "feedback";
+        repeatQuestionBtn.disabled = true;
+        return;
+      }
+
+      repeatQuestionBtn.disabled = false;
+      gameFeedback.textContent = "";
+      gameFeedback.className = "feedback";
+
+      const shuffled = shuffle(animals);
+      gameOptions = shuffled.slice(0, 3);
+      correctAnimalIndexInOptions = Math.floor(Math.random() * 3);
+      currentQuestionAnimal = gameOptions[correctAnimalIndexInOptions];
+
+      gameQuestion.textContent = "Con " + currentQuestionAnimal.name.toLowerCase() + " ở đâu?";
+      renderGameOptions();
+      playVtudienAudio(currentQuestionAnimal.name);
+    }
+
+    function renderGameOptions() {
+      gameGrid.innerHTML = "";
+
+      gameOptions.forEach((animal, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option-btn";
+        button.innerHTML = `
+          <img class="option-image" src="${animal.image}" alt="${animal.name}" />
+          <div class="option-label">${animal.name}</div>
+        `;
+        const optionImage = button.querySelector(".option-image");
+        optionImage.addEventListener("error", function() {
+          handleImageLoadError(optionImage, animal.name);
+        });
+        button.addEventListener("click", function() {
+          checkGameAnswer(index, button);
+        });
+        gameGrid.appendChild(button);
+      });
+    }
+
+    function checkGameAnswer(selectedIndex, buttonElement) {
+      const optionButtons = Array.from(gameGrid.querySelectorAll(".option-btn"));
+      optionButtons.forEach(btn => btn.disabled = true);
+
+      if (selectedIndex === correctAnimalIndexInOptions) {
+        buttonElement.classList.add("correct");
+        gameFeedback.textContent = "⭐⭐⭐ Giỏi lắm!";
+        gameFeedback.className = "feedback success";
+        playPraiseSound();
+      } else {
+        buttonElement.classList.add("wrong");
+        optionButtons[correctAnimalIndexInOptions].classList.add("correct");
+        gameFeedback.textContent = "Thử lại nhé!";
+        gameFeedback.className = "feedback error";
+      }
+
+      setTimeout(() => {
+        createGameRound();
+      }, 1800);
+    }
+
+    function renderAdminList() {
+      if (!animals.length) {
+        adminList.innerHTML = '<div class="empty-state">Chưa có động vật nào.</div>';
+        return;
+      }
+
+      adminList.innerHTML = animals.map((animal, index) => `
+        <div class="animal-row">
+          <img class="animal-thumb" src="${animal.image}" alt="${animal.name}" />
+          <div class="animal-row-main">
+            <div class="animal-row-name">${animal.name}</div>
+            <div class="animal-row-url">${animal.image}</div>
+            <div class="row-actions">
+              <button class="edit-btn" type="button" data-action="edit" data-index="${index}">Sửa</button>
+              <button class="delete-btn" type="button" data-action="delete" data-index="${index}">Xóa</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      adminList.querySelectorAll(".animal-thumb").forEach((img, index) => {
+        img.addEventListener("error", function() {
+          handleImageLoadError(img, animals[index] ? animals[index].name : "");
+        });
+      });
+    }
+
+    function resetAdminForm() {
+      editingIndex = null;
+      adminForm.reset();
+      cancelEditBtn.classList.add("hidden");
+    }
+
+    function startEditAnimal(index) {
+      const animal = animals[index];
+      if (!animal) return;
+      editingIndex = index;
+      animalNameInput.value = animal.name;
+      animalImageInput.value = animal.image;
+      cancelEditBtn.classList.remove("hidden");
+      animalNameInput.focus();
+      showScreen("admin");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function deleteAnimal(index) {
+      if (animals.length === 1) {
+        alert("Cần giữ ít nhất 1 con vật trong danh sách.");
+        return;
+      }
+
+      animals.splice(index, 1);
+      saveAnimals();
+      renderAdminList();
+
+      if (currentAnimalIndex >= animals.length) {
+        currentAnimalIndex = 0;
+      }
+
+      renderLearnAnimal();
+
+      if (currentScreen === "game") {
+        createGameRound();
+      }
+    }
+
+    function addOrUpdateAnimal(event) {
+      event.preventDefault();
+
+      const name = animalNameInput.value.trim();
+      const image = animalImageInput.value.trim();
+
+      if (!name || !image) {
+        alert("Vui lòng nhập đủ tên và link ảnh.");
+        return;
+      }
+
+      const newAnimal = { name, image };
+
+      if (editingIndex === null) {
+        animals.push(newAnimal);
+      } else {
+        animals[editingIndex] = newAnimal;
+      }
+
+      saveAnimals();
+      renderAdminList();
+      renderLearnAnimal();
+      resetAdminForm();
+    }
+
+    function initializeApp() {
+      renderLearnAnimal();
+      renderAdminList();
+      showScreen("home");
+    }
+
+    startLearnBtn.addEventListener("click", function() {
+      if (!animals.length) {
+        alert("Chưa có con vật nào để học.");
+        return;
+      }
+      renderLearnAnimal();
+      showScreen("learn");
+      playVtudienAudio(animals[currentAnimalIndex].name);
+    });
+
+    startGameBtn.addEventListener("click", function() {
+      showScreen("game");
+      createGameRound();
+    });
+
+    adminTopBtn.addEventListener("click", function() {
+      renderAdminList();
+      showScreen("admin");
+    });
+
+    backFromLearnBtn.addEventListener("click", function() {
+      showScreen("home");
+    });
+
+    backFromGameBtn.addEventListener("click", function() {
+      showScreen("home");
+    });
+
+    backFromAdminBtn.addEventListener("click", function() {
+      resetAdminForm();
+      showScreen("home");
+    });
+
+    speakBtn.addEventListener("click", function() {
+      if (animals[currentAnimalIndex]) {
+        playVtudienAudio(animals[currentAnimalIndex].name);
+      }
+    });
+
+    learnImage.addEventListener("error", function() {
+      const currentAnimal = animals[currentAnimalIndex];
+      handleImageLoadError(learnImage, currentAnimal ? currentAnimal.name : "");
+      learnImageWarning.classList.remove("hidden");
+    });
+
+    fixCurrentImageBtn.addEventListener("click", function() {
+      if (typeof currentAnimalIndex !== "number" || !animals[currentAnimalIndex]) return;
+      startEditAnimal(currentAnimalIndex);
+    });
+
+    nextAnimalBtn.addEventListener("click", function() {
+      if (!animals.length) return;
+      currentAnimalIndex = (currentAnimalIndex + 1) % animals.length;
+      renderLearnAnimal();
+      playVtudienAudio(animals[currentAnimalIndex].name);
+    });
+
+    repeatQuestionBtn.addEventListener("click", function() {
+      if (currentQuestionAnimal) {
+        playVtudienAudio(currentQuestionAnimal.name);
+      }
+    });
+
+    newRoundBtn.addEventListener("click", function() {
+      createGameRound();
+    });
+
+    adminForm.addEventListener("submit", addOrUpdateAnimal);
+
+    cancelEditBtn.addEventListener("click", function() {
+      resetAdminForm();
+    });
+
+    adminList.addEventListener("click", function(event) {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+
+      const index = Number(button.dataset.index);
+      const action = button.dataset.action;
+
+      if (action === "edit") {
+        startEditAnimal(index);
+      }
+
+      if (action === "delete") {
+        deleteAnimal(index);
+      }
+    });
+
+    initializeApp();
+  </script>
+</body>
+</html>
