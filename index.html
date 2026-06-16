@@ -624,6 +624,7 @@
         <div class="home-actions">
           <button class="primary-btn" id="startLearnBtn" type="button">Bắt Đầu Học</button>
           <button class="secondary-btn" id="startGameBtn" type="button">Trò Chơi</button>
+          <button class="primary-btn" id="startNumbersBtn" type="button">Học Đếm 1–10</button>
         </div>
       </div>
     </section>
@@ -640,6 +641,7 @@
             <h2 id="learnName" class="animal-name">Chó</h2>
             <div class="learn-actions">
               <button class="speak-btn" id="speakBtn" type="button">🔊 Phát âm</button>
+              <button class="nav-btn" id="prevAnimalBtn" type="button">👈 Con trước đó</button>
               <button class="nav-btn" id="nextAnimalBtn" type="button">👉 Con tiếp theo</button>
             </div>
             <div id="learnImageWarning" class="image-warning hidden">
@@ -659,6 +661,22 @@
               <button class="fix-image-btn" id="fixCurrentImageBtn" type="button">🛠️ Lưu URL ảnh mới</button>
             </div>
             <p class="tiny-note">Bé có thể nghe tên con vật và xem ảnh lớn thật rõ ràng.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="numbersScreen">
+      <div class="card">
+        <button class="back-btn" id="backFromNumbersBtn" type="button">← Quay lại</button>
+        <h2 class="section-title">Bé Học Đếm 1–10</h2>
+        <div class="animal-image-wrap" style="max-width: 720px; margin: 0 auto; text-align: center;">
+          <div id="numberDisplay" class="animal-name" style="font-size: clamp(8rem, 32vw, 14rem); margin-top: 0;">1</div>
+          <div id="numberLabel" class="game-question" style="margin-bottom: 20px;">Một</div>
+          <div class="learn-actions">
+            <button class="speak-btn" id="speakNumberBtn" type="button">🔊 Đọc số</button>
+            <button class="nav-btn" id="prevNumberBtn" type="button">👈 Số trước</button>
+            <button class="nav-btn" id="nextNumberBtn" type="button">👉 Số tiếp theo</button>
           </div>
         </div>
       </div>
@@ -839,21 +857,25 @@
     let selectedCategory = "all";
     let selectedAdminCategory = "all";
     let selectedGameCategory = "all";
+    let currentNumberIndex = 0;
 
     const screens = {
       home: document.getElementById("homeScreen"),
       learn: document.getElementById("learnScreen"),
+      numbers: document.getElementById("numbersScreen"),
       game: document.getElementById("gameScreen"),
       admin: document.getElementById("adminScreen")
     };
 
     const startLearnBtn = document.getElementById("startLearnBtn");
     const startGameBtn = document.getElementById("startGameBtn");
+    const startNumbersBtn = document.getElementById("startNumbersBtn");
     const adminTopBtn = document.getElementById("adminTopBtn");
 
     const learnImage = document.getElementById("learnImage");
     const learnName = document.getElementById("learnName");
     const speakBtn = document.getElementById("speakBtn");
+    const prevAnimalBtn = document.getElementById("prevAnimalBtn");
     const nextAnimalBtn = document.getElementById("nextAnimalBtn");
     const backFromLearnBtn = document.getElementById("backFromLearnBtn");
     const learnImageWarning = document.getElementById("learnImageWarning");
@@ -864,6 +886,13 @@
     const currentImageUrl = document.getElementById("currentImageUrl");
     const learnImageUrlInput = document.getElementById("learnImageUrlInput");
     const learnNameInput = document.getElementById("learnNameInput");
+
+    const numberDisplay = document.getElementById("numberDisplay");
+    const numberLabel = document.getElementById("numberLabel");
+    const speakNumberBtn = document.getElementById("speakNumberBtn");
+    const prevNumberBtn = document.getElementById("prevNumberBtn");
+    const nextNumberBtn = document.getElementById("nextNumberBtn");
+    const backFromNumbersBtn = document.getElementById("backFromNumbersBtn");
 
     const gameQuestion = document.getElementById("gameQuestion");
     const repeatQuestionBtn = document.getElementById("repeatQuestionBtn");
@@ -957,6 +986,7 @@
         learnName.textContent = "Chưa có con vật trong nhóm này";
         learnCategoryTag.textContent = selectedCategory === "all" ? "Tất cả" : getCategoryLabel(selectedCategory);
         speakBtn.disabled = true;
+        prevAnimalBtn.disabled = true;
         nextAnimalBtn.disabled = true;
         learnImageWarning.classList.add("hidden");
         return;
@@ -973,6 +1003,7 @@
       currentImageUrl.textContent = animal.image;
       learnImageUrlInput.value = animal.image;
       speakBtn.disabled = false;
+      prevAnimalBtn.disabled = filteredAnimals.length <= 1;
       nextAnimalBtn.disabled = filteredAnimals.length <= 1;
       learnImageWarning.classList.add("hidden");
     }
@@ -995,6 +1026,38 @@
       audio.play().catch(function() {
         alert("Không thể phát âm thanh từ vtudien.com cho từ: " + text);
       });
+    }
+
+    const numbers = [
+      { value: 1, label: "Một", color: "#ff595e", shadow: "#ffd6d6" },
+      { value: 2, label: "Hai", color: "#ff924c", shadow: "#ffe0c7" },
+      { value: 3, label: "Ba", color: "#ffca3a", shadow: "#fff1b8" },
+      { value: 4, label: "Bốn", color: "#8ac926", shadow: "#ddf5b8" },
+      { value: 5, label: "Năm", color: "#1982c4", shadow: "#c9e8ff" },
+      { value: 6, label: "Sáu", color: "#6a4c93", shadow: "#dfd2f5" },
+      { value: 7, label: "Bảy", color: "#f15bb5", shadow: "#ffd5ee" },
+      { value: 8, label: "Tám", color: "#00bbf9", shadow: "#c9f1ff" },
+      { value: 9, label: "Chín", color: "#00c49a", shadow: "#c9fff1" },
+      { value: 10, label: "Mười", color: "#ff006e", shadow: "#ffd0e4" }
+    ];
+
+    function renderCurrentNumber() {
+      const item = numbers[currentNumberIndex];
+      if (!item) return;
+
+      numberDisplay.textContent = item.value;
+      numberDisplay.style.color = item.color;
+      numberDisplay.style.textShadow = "0 8px 24px " + item.shadow;
+      numberLabel.textContent = item.label;
+      numberLabel.style.color = item.color;
+      prevNumberBtn.disabled = currentNumberIndex === 0;
+      nextNumberBtn.disabled = currentNumberIndex === numbers.length - 1;
+    }
+
+    function speakCurrentNumber() {
+      const item = numbers[currentNumberIndex];
+      if (!item) return;
+      playVtudienAudio(item.label);
     }
 
     function beep(frequency, duration, type) {
@@ -1227,6 +1290,7 @@
       updateCategoryButtons(adminCategoryBar, selectedAdminCategory);
       updateCategoryButtons(gameCategoryBar, selectedGameCategory);
       renderLearnAnimal();
+      renderCurrentNumber();
       renderAdminList();
       showScreen("home");
     }
@@ -1245,6 +1309,12 @@
     startGameBtn.addEventListener("click", function() {
       showScreen("game");
       createGameRound();
+    });
+
+    startNumbersBtn.addEventListener("click", function() {
+      renderCurrentNumber();
+      showScreen("numbers");
+      speakCurrentNumber();
     });
 
     adminTopBtn.addEventListener("click", function() {
@@ -1281,6 +1351,10 @@
     });
 
     backFromLearnBtn.addEventListener("click", function() {
+      showScreen("home");
+    });
+
+    backFromNumbersBtn.addEventListener("click", function() {
       showScreen("home");
     });
 
@@ -1352,6 +1426,17 @@
       learnImageWarning.classList.add("hidden");
     });
 
+    prevAnimalBtn.addEventListener("click", function() {
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+      if (!filteredAnimals.length) return;
+      currentAnimalIndex = (currentAnimalIndex - 1 + filteredAnimals.length) % filteredAnimals.length;
+      renderLearnAnimal();
+      const prevAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
+      if (prevAnimal) {
+        playVtudienAudio(prevAnimal.name);
+      }
+    });
+
     nextAnimalBtn.addEventListener("click", function() {
       const filteredAnimals = getFilteredAnimals(selectedCategory);
       if (!filteredAnimals.length) return;
@@ -1360,6 +1445,26 @@
       const nextAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
       if (nextAnimal) {
         playVtudienAudio(nextAnimal.name);
+      }
+    });
+
+    speakNumberBtn.addEventListener("click", function() {
+      speakCurrentNumber();
+    });
+
+    prevNumberBtn.addEventListener("click", function() {
+      if (currentNumberIndex > 0) {
+        currentNumberIndex -= 1;
+        renderCurrentNumber();
+        speakCurrentNumber();
+      }
+    });
+
+    nextNumberBtn.addEventListener("click", function() {
+      if (currentNumberIndex < numbers.length - 1) {
+        currentNumberIndex += 1;
+        renderCurrentNumber();
+        speakCurrentNumber();
       }
     });
 
