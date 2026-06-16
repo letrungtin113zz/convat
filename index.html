@@ -27,10 +27,14 @@
     html, body {
       margin: 0;
       padding: 0;
-      font-family: "Arial", "Helvetica", sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100%;
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
@@ -38,7 +42,7 @@
       overflow-x: hidden;
     }
 
-    button, input {
+    button, input, select {
       font: inherit;
     }
 
@@ -77,7 +81,8 @@
     .save-btn,
     .edit-btn,
     .delete-btn,
-    .option-btn {
+    .option-btn,
+    .fix-image-btn {
       border: none;
       border-radius: 999px;
       cursor: pointer;
@@ -155,7 +160,7 @@
       grid-template-columns: repeat(3, minmax(70px, 1fr));
       gap: 12px;
       max-width: 420px;
-      margin: 0 auto 28px;
+      margin: 0 auto 20px;
     }
 
     .hero-bubble {
@@ -258,6 +263,43 @@
       text-align: center;
       color: var(--secondary);
       margin: 0 0 14px;
+    }
+
+    .category-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto 18px;
+    }
+
+    .category-btn,
+    .category-tag {
+      border: none;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .category-btn {
+      cursor: pointer;
+      padding: 12px 16px;
+      background: white;
+      color: var(--secondary);
+      box-shadow: var(--shadow);
+    }
+
+    .category-btn.active {
+      background: linear-gradient(135deg, var(--secondary), #7ab8ff);
+      color: white;
+    }
+
+    .category-tag {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #eef5ff;
+      color: var(--secondary);
+      font-size: 0.98rem;
+      margin: 0 auto 12px;
     }
 
     .game-question {
@@ -369,6 +411,7 @@
       border: 2px solid #dfe9f8;
       outline: none;
       font-size: 1rem;
+      background: white;
     }
 
     .text-input:focus {
@@ -572,6 +615,12 @@
         </div>
         <h1 class="logo">Bé Học Con Vật</h1>
         <p class="subtitle">Học tên con vật bằng hình ảnh thật, âm thanh và trò chơi vui nhộn.</p>
+        <div class="category-bar" id="homeCategoryBar">
+          <button class="category-btn active" type="button" data-category="all">Tất cả</button>
+          <button class="category-btn" type="button" data-category="land">Trên cạn</button>
+          <button class="category-btn" type="button" data-category="water">Dưới nước</button>
+          <button class="category-btn" type="button" data-category="sky">Trên trời</button>
+        </div>
         <div class="home-actions">
           <button class="primary-btn" id="startLearnBtn" type="button">Bắt Đầu Học</button>
           <button class="secondary-btn" id="startGameBtn" type="button">Trò Chơi</button>
@@ -587,14 +636,27 @@
           </div>
           <div>
             <button class="back-btn" id="backFromLearnBtn" type="button">← Quay lại</button>
+            <div id="learnCategoryTag" class="category-tag">Trên cạn</div>
             <h2 id="learnName" class="animal-name">Chó</h2>
             <div class="learn-actions">
               <button class="speak-btn" id="speakBtn" type="button">🔊 Phát âm</button>
               <button class="nav-btn" id="nextAnimalBtn" type="button">👉 Con tiếp theo</button>
             </div>
             <div id="learnImageWarning" class="image-warning hidden">
-              Ảnh hiện tại có thể bị sai hoặc không tải được.<br />
-              <button class="fix-image-btn" id="fixCurrentImageBtn" type="button">🛠️ Sửa hình ảnh này</button>
+              Ảnh hiện tại có thể bị sai hoặc không tải được.
+            </div>
+            <div class="image-warning">
+              <div><strong>Tên hiện tại:</strong> <span id="currentAnimalNameText"></span></div>
+              <label class="field-label" for="learnNameInput" style="margin-top:10px;">Cập nhật tên con vật</label>
+              <input class="text-input" id="learnNameInput" type="text" placeholder="Ví dụ: Chó" />
+              <button class="fix-image-btn" id="fixCurrentNameBtn" type="button">📝 Lưu tên mới</button>
+            </div>
+            <div class="image-warning">
+              <div><strong>URL ảnh hiện tại:</strong></div>
+              <div id="currentImageUrl" class="animal-row-url"></div>
+              <label class="field-label" for="learnImageUrlInput" style="margin-top:10px;">Cập nhật URL ảnh mới</label>
+              <input class="text-input" id="learnImageUrlInput" type="url" placeholder="https://..." />
+              <button class="fix-image-btn" id="fixCurrentImageBtn" type="button">🛠️ Lưu URL ảnh mới</button>
             </div>
             <p class="tiny-note">Bé có thể nghe tên con vật và xem ảnh lớn thật rõ ràng.</p>
           </div>
@@ -606,6 +668,12 @@
       <div class="card">
         <button class="back-btn" id="backFromGameBtn" type="button">← Quay lại</button>
         <h2 class="section-title">Trò Chơi Tìm Con Vật</h2>
+        <div class="category-bar" id="gameCategoryBar">
+          <button class="category-btn active" type="button" data-category="all">Tất cả</button>
+          <button class="category-btn" type="button" data-category="land">Trên cạn</button>
+          <button class="category-btn" type="button" data-category="water">Dưới nước</button>
+          <button class="category-btn" type="button" data-category="sky">Trên trời</button>
+        </div>
         <div class="game-toolbar">
           <button class="speak-btn" id="repeatQuestionBtn" type="button">🔊 Đọc lại câu hỏi</button>
           <button class="nav-btn" id="newRoundBtn" type="button">🎲 Câu mới</button>
@@ -624,6 +692,13 @@
           <div class="tiny-note">Thêm, sửa, xóa động vật. Dữ liệu được lưu trong LocalStorage.</div>
         </div>
 
+        <div class="category-bar" id="adminCategoryBar">
+          <button class="category-btn active" type="button" data-category="all">Tất cả</button>
+          <button class="category-btn" type="button" data-category="land">Trên cạn</button>
+          <button class="category-btn" type="button" data-category="water">Dưới nước</button>
+          <button class="category-btn" type="button" data-category="sky">Trên trời</button>
+        </div>
+
         <div class="admin-layout">
           <div class="admin-form-panel">
             <form id="adminForm" class="admin-form">
@@ -634,6 +709,14 @@
               <div class="full">
                 <label class="field-label" for="animalImageInput">Link ảnh</label>
                 <input class="text-input" id="animalImageInput" type="url" placeholder="https://..." required />
+              </div>
+              <div class="full">
+                <label class="field-label" for="animalCategoryInput">Phân loại</label>
+                <select class="text-input" id="animalCategoryInput" required>
+                  <option value="land">Trên cạn</option>
+                  <option value="water">Dưới nước</option>
+                  <option value="sky">Trên trời</option>
+                </select>
               </div>
               <div class="full form-actions">
                 <button class="save-btn" id="saveAnimalBtn" type="submit">💾 Lưu động vật</button>
@@ -652,46 +735,96 @@
 
   <script>
     const defaultAnimals = [
-      {
-        name: "Chó",
-        image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Mèo",
-        image: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Gà",
-        image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Vịt",
-        image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Bò",
-        image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Heo",
-        image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Ngựa",
-        image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Voi",
-        image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Sư tử",
-        image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        name: "Khỉ",
-        image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=900&q=80"
-      }
+      { name: "Chó", image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Mèo", image: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Gà", image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Vịt", image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Bò", image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Heo", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Ngựa", image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Voi", image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Sư tử", image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Khỉ", image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=900&q=80", category: "land" },
+
+      { name: "Thỏ", image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Hươu", image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Cừu", image: "https://images.unsplash.com/photo-1484557985045-edf25e08da73?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Dê", image: "https://images.unsplash.com/photo-1524024973431-2ad916746881?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Hổ", image: "https://images.unsplash.com/photo-1549480017-d76466a4b7e8?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Gấu", image: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Sóc", image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Lạc đà", image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Hà mã", image: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Tê giác", image: "https://images.unsplash.com/photo-1519066629447-267fffa62d4b?auto=format&fit=crop&w=900&q=80", category: "land" },
+
+      { name: "Cá", image: "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá heo", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá mập", image: "https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Rùa biển", image: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Bạch tuộc", image: "https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cua", image: "https://images.unsplash.com/photo-1504470695779-75300268aa0e?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Sứa", image: "https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=900&q=80", category: "water" },
+
+      { name: "Chim", image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Đại bàng", image: "https://images.unsplash.com/photo-1611689342806-0863700ce1e4?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Vẹt", image: "https://images.unsplash.com/photo-1544923408-75c5cef46f14?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Cú mèo", image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Công", image: "https://images.unsplash.com/photo-1520808663317-647b476a81b9?auto=format&fit=crop&w=900&q=80", category: "sky" },
+
+      { name: "Báo", image: "https://images.unsplash.com/photo-1516934024742-b461fba47600?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Báo đốm", image: "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Linh dương", image: "https://images.unsplash.com/photo-1501706362039-c6e80948bb64?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Zebra", image: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Chuột", image: "https://images.unsplash.com/photo-1535241749838-299277b6305f?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Chuột hamster", image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Nhím", image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Chồn", image: "https://images.unsplash.com/photo-1520315342629-6ea920342047?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Sói", image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Cáo", image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Lợn rừng", image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Trâu", image: "https://images.unsplash.com/photo-1517846693594-1567da72af75?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Bò rừng", image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Llama", image: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Alpaca", image: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Kangaroo", image: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Koala", image: "https://images.unsplash.com/photo-1525253086316-d0c936c814f8?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Gấu trúc", image: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Lười", image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Tatu", image: "https://images.unsplash.com/photo-1552410260-0fd9b577afa6?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Chó sói", image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=900&q=80", category: "land" },
+      { name: "Lemur", image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?auto=format&fit=crop&w=900&q=80", category: "land" },
+
+      { name: "Cá voi", image: "https://images.unsplash.com/photo-1568430462989-44163eb1752f?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Hải cẩu", image: "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Sao biển", image: "https://images.unsplash.com/photo-1544551763-92ab472cad5d?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá ngựa", image: "https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Tôm", image: "https://images.unsplash.com/photo-1510130387422-82bed34b37e9?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Tôm hùm", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Mực", image: "https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Ốc biển", image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá vàng", image: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá chép", image: "https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Lươn", image: "https://images.unsplash.com/photo-1571752726703-5e7d1f6a4f8d?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá đuối", image: "https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Cá hề", image: "https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Hàu", image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=900&q=80", category: "water" },
+      { name: "Sò", image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80", category: "water" },
+
+      { name: "Thiên nga", image: "https://images.unsplash.com/photo-1501706362039-c6e80948bb64?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Bồ câu", image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim sẻ", image: "https://images.unsplash.com/photo-1501706362039-c6e80948bb64?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim én", image: "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Hồng hạc", image: "https://images.unsplash.com/photo-1497206365907-f5e630693df0?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Đà điểu", image: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim cánh cụt", image: "https://images.unsplash.com/photo-1517783999520-f068d7431a60?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim gõ kiến", image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim hoàng yến", image: "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim mỏ toucan", image: "https://images.unsplash.com/photo-1544923408-75c5cef46f14?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim công xanh", image: "https://images.unsplash.com/photo-1520808663317-647b476a81b9?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim bói cá", image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Chim diều hâu", image: "https://images.unsplash.com/photo-1611689342806-0863700ce1e4?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Vịt trời", image: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=900&q=80", category: "sky" },
+      { name: "Ngỗng", image: "https://images.unsplash.com/photo-1501706362039-c6e80948bb64?auto=format&fit=crop&w=900&q=80", category: "sky" }
     ];
 
     const STORAGE_KEY = "be-hoc-con-vat-animals";
@@ -703,6 +836,9 @@
     let gameOptions = [];
     let correctAnimalIndexInOptions = -1;
     let currentQuestionAnimal = null;
+    let selectedCategory = "all";
+    let selectedAdminCategory = "all";
+    let selectedGameCategory = "all";
 
     const screens = {
       home: document.getElementById("homeScreen"),
@@ -722,6 +858,12 @@
     const backFromLearnBtn = document.getElementById("backFromLearnBtn");
     const learnImageWarning = document.getElementById("learnImageWarning");
     const fixCurrentImageBtn = document.getElementById("fixCurrentImageBtn");
+    const fixCurrentNameBtn = document.getElementById("fixCurrentNameBtn");
+    const learnCategoryTag = document.getElementById("learnCategoryTag");
+    const currentAnimalNameText = document.getElementById("currentAnimalNameText");
+    const currentImageUrl = document.getElementById("currentImageUrl");
+    const learnImageUrlInput = document.getElementById("learnImageUrlInput");
+    const learnNameInput = document.getElementById("learnNameInput");
 
     const gameQuestion = document.getElementById("gameQuestion");
     const repeatQuestionBtn = document.getElementById("repeatQuestionBtn");
@@ -734,18 +876,44 @@
     const adminForm = document.getElementById("adminForm");
     const animalNameInput = document.getElementById("animalNameInput");
     const animalImageInput = document.getElementById("animalImageInput");
+    const animalCategoryInput = document.getElementById("animalCategoryInput");
     const cancelEditBtn = document.getElementById("cancelEditBtn");
     const adminList = document.getElementById("adminList");
+    const homeCategoryBar = document.getElementById("homeCategoryBar");
+    const adminCategoryBar = document.getElementById("adminCategoryBar");
+    const gameCategoryBar = document.getElementById("gameCategoryBar");
 
     function loadAnimals() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (!saved) return [...defaultAnimals];
+
         const parsed = JSON.parse(saved);
         if (!Array.isArray(parsed) || parsed.length === 0) {
           return [...defaultAnimals];
         }
-        return parsed.filter(item => item && item.name && item.image);
+
+        const normalizedSaved = parsed
+          .filter(item => item && item.name && item.image)
+          .map(item => ({
+            name: item.name,
+            image: item.image,
+            category: item.category || "land"
+          }));
+
+        const mergedAnimals = [...normalizedSaved];
+        const existingKeys = new Set(
+          normalizedSaved.map(item => (item.name || "").trim().toLowerCase())
+        );
+
+        defaultAnimals.forEach(item => {
+          const key = (item.name || "").trim().toLowerCase();
+          if (!existingKeys.has(key)) {
+            mergedAnimals.push({ ...item });
+          }
+        });
+
+        return mergedAnimals;
       } catch (error) {
         return [...defaultAnimals];
       }
@@ -753,6 +921,24 @@
 
     function saveAnimals() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
+    }
+
+    function getCategoryLabel(category) {
+      if (category === "water") return "Dưới nước";
+      if (category === "sky") return "Trên trời";
+      return "Trên cạn";
+    }
+
+    function getFilteredAnimals(category) {
+      if (category === "all") return animals;
+      return animals.filter(animal => animal.category === category);
+    }
+
+    function updateCategoryButtons(container, activeCategory) {
+      if (!container) return;
+      container.querySelectorAll(".category-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.category === activeCategory);
+      });
     }
 
     function showScreen(name) {
@@ -763,23 +949,31 @@
     }
 
     function renderLearnAnimal() {
-      if (!animals.length) {
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+
+      if (!filteredAnimals.length) {
         learnImage.src = "";
         learnImage.alt = "Chưa có con vật";
-        learnName.textContent = "Chưa có con vật";
+        learnName.textContent = "Chưa có con vật trong nhóm này";
+        learnCategoryTag.textContent = selectedCategory === "all" ? "Tất cả" : getCategoryLabel(selectedCategory);
         speakBtn.disabled = true;
         nextAnimalBtn.disabled = true;
         learnImageWarning.classList.add("hidden");
         return;
       }
 
-      currentAnimalIndex = ((currentAnimalIndex % animals.length) + animals.length) % animals.length;
-      const animal = animals[currentAnimalIndex];
+      currentAnimalIndex = ((currentAnimalIndex % filteredAnimals.length) + filteredAnimals.length) % filteredAnimals.length;
+      const animal = filteredAnimals[currentAnimalIndex];
       learnImage.src = animal.image;
       learnImage.alt = animal.name;
       learnName.textContent = animal.name;
+      learnCategoryTag.textContent = getCategoryLabel(animal.category);
+      currentAnimalNameText.textContent = animal.name;
+      learnNameInput.value = animal.name;
+      currentImageUrl.textContent = animal.image;
+      learnImageUrlInput.value = animal.image;
       speakBtn.disabled = false;
-      nextAnimalBtn.disabled = animals.length <= 1;
+      nextAnimalBtn.disabled = filteredAnimals.length <= 1;
       learnImageWarning.classList.add("hidden");
     }
 
@@ -855,9 +1049,11 @@
     }
 
     function createGameRound() {
-      if (animals.length < 3) {
+      const sourceAnimals = getFilteredAnimals(selectedGameCategory);
+
+      if (sourceAnimals.length < 3) {
         gameGrid.innerHTML = "";
-        gameQuestion.textContent = "Cần ít nhất 3 con vật để chơi trò chơi.";
+        gameQuestion.textContent = "Cần ít nhất 3 con vật trong nhóm này để chơi trò chơi.";
         gameFeedback.textContent = "";
         gameFeedback.className = "feedback";
         repeatQuestionBtn.disabled = true;
@@ -868,7 +1064,7 @@
       gameFeedback.textContent = "";
       gameFeedback.className = "feedback";
 
-      const shuffled = shuffle(animals);
+      const shuffled = shuffle(sourceAnimals);
       gameOptions = shuffled.slice(0, 3);
       correctAnimalIndexInOptions = Math.floor(Math.random() * 3);
       currentQuestionAnimal = gameOptions[correctAnimalIndexInOptions];
@@ -922,16 +1118,23 @@
     }
 
     function renderAdminList() {
-      if (!animals.length) {
-        adminList.innerHTML = '<div class="empty-state">Chưa có động vật nào.</div>';
+      const adminAnimals = selectedAdminCategory === "all"
+        ? animals.map((animal, index) => ({ animal, index }))
+        : animals
+            .map((animal, index) => ({ animal, index }))
+            .filter(item => item.animal.category === selectedAdminCategory);
+
+      if (!adminAnimals.length) {
+        adminList.innerHTML = '<div class="empty-state">Chưa có động vật nào trong nhóm này.</div>';
         return;
       }
 
-      adminList.innerHTML = animals.map((animal, index) => `
+      adminList.innerHTML = adminAnimals.map(({ animal, index }) => `
         <div class="animal-row">
           <img class="animal-thumb" src="${animal.image}" alt="${animal.name}" />
           <div class="animal-row-main">
             <div class="animal-row-name">${animal.name}</div>
+            <div class="category-tag">${getCategoryLabel(animal.category)}</div>
             <div class="animal-row-url">${animal.image}</div>
             <div class="row-actions">
               <button class="edit-btn" type="button" data-action="edit" data-index="${index}">Sửa</button>
@@ -943,7 +1146,8 @@
 
       adminList.querySelectorAll(".animal-thumb").forEach((img, index) => {
         img.addEventListener("error", function() {
-          handleImageLoadError(img, animals[index] ? animals[index].name : "");
+          const item = adminAnimals[index];
+          handleImageLoadError(img, item ? item.animal.name : "");
         });
       });
     }
@@ -951,6 +1155,7 @@
     function resetAdminForm() {
       editingIndex = null;
       adminForm.reset();
+      animalCategoryInput.value = "land";
       cancelEditBtn.classList.add("hidden");
     }
 
@@ -960,9 +1165,11 @@
       editingIndex = index;
       animalNameInput.value = animal.name;
       animalImageInput.value = animal.image;
+      animalCategoryInput.value = animal.category || "land";
       cancelEditBtn.classList.remove("hidden");
       animalNameInput.focus();
       showScreen("admin");
+      updateCategoryButtons(adminCategoryBar, selectedAdminCategory);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -976,7 +1183,8 @@
       saveAnimals();
       renderAdminList();
 
-      if (currentAnimalIndex >= animals.length) {
+      const learnAnimals = getFilteredAnimals(selectedCategory);
+      if (currentAnimalIndex >= learnAnimals.length) {
         currentAnimalIndex = 0;
       }
 
@@ -992,13 +1200,14 @@
 
       const name = animalNameInput.value.trim();
       const image = animalImageInput.value.trim();
+      const category = animalCategoryInput.value;
 
-      if (!name || !image) {
-        alert("Vui lòng nhập đủ tên và link ảnh.");
+      if (!name || !image || !category) {
+        alert("Vui lòng nhập đủ tên, link ảnh và phân loại.");
         return;
       }
 
-      const newAnimal = { name, image };
+      const newAnimal = { name, image, category };
 
       if (editingIndex === null) {
         animals.push(newAnimal);
@@ -1013,19 +1222,24 @@
     }
 
     function initializeApp() {
+      saveAnimals();
+      updateCategoryButtons(homeCategoryBar, selectedCategory);
+      updateCategoryButtons(adminCategoryBar, selectedAdminCategory);
+      updateCategoryButtons(gameCategoryBar, selectedGameCategory);
       renderLearnAnimal();
       renderAdminList();
       showScreen("home");
     }
 
     startLearnBtn.addEventListener("click", function() {
-      if (!animals.length) {
-        alert("Chưa có con vật nào để học.");
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+      if (!filteredAnimals.length) {
+        alert("Chưa có con vật nào trong nhóm này để học.");
         return;
       }
       renderLearnAnimal();
       showScreen("learn");
-      playVtudienAudio(animals[currentAnimalIndex].name);
+      playVtudienAudio(filteredAnimals[currentAnimalIndex].name);
     });
 
     startGameBtn.addEventListener("click", function() {
@@ -1035,7 +1249,35 @@
 
     adminTopBtn.addEventListener("click", function() {
       renderAdminList();
+      updateCategoryButtons(adminCategoryBar, selectedAdminCategory);
       showScreen("admin");
+    });
+
+    homeCategoryBar.addEventListener("click", function(event) {
+      const button = event.target.closest(".category-btn");
+      if (!button) return;
+      selectedCategory = button.dataset.category;
+      currentAnimalIndex = 0;
+      updateCategoryButtons(homeCategoryBar, selectedCategory);
+      renderLearnAnimal();
+    });
+
+    adminCategoryBar.addEventListener("click", function(event) {
+      const button = event.target.closest(".category-btn");
+      if (!button) return;
+      selectedAdminCategory = button.dataset.category;
+      updateCategoryButtons(adminCategoryBar, selectedAdminCategory);
+      renderAdminList();
+    });
+
+    gameCategoryBar.addEventListener("click", function(event) {
+      const button = event.target.closest(".category-btn");
+      if (!button) return;
+      selectedGameCategory = button.dataset.category;
+      updateCategoryButtons(gameCategoryBar, selectedGameCategory);
+      if (currentScreen === "game") {
+        createGameRound();
+      }
     });
 
     backFromLearnBtn.addEventListener("click", function() {
@@ -1052,27 +1294,73 @@
     });
 
     speakBtn.addEventListener("click", function() {
-      if (animals[currentAnimalIndex]) {
-        playVtudienAudio(animals[currentAnimalIndex].name);
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+      if (filteredAnimals[currentAnimalIndex]) {
+        playVtudienAudio(filteredAnimals[currentAnimalIndex].name);
       }
     });
 
     learnImage.addEventListener("error", function() {
-      const currentAnimal = animals[currentAnimalIndex];
+      const currentAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
       handleImageLoadError(learnImage, currentAnimal ? currentAnimal.name : "");
       learnImageWarning.classList.remove("hidden");
     });
 
+    function getCurrentLearnAnimalIndex() {
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+      const currentAnimal = filteredAnimals[currentAnimalIndex];
+      if (!currentAnimal) return -1;
+
+      return animals.findIndex(animal =>
+        animal.name === currentAnimal.name &&
+        animal.image === currentAnimal.image &&
+        animal.category === currentAnimal.category
+      );
+    }
+
+    fixCurrentNameBtn.addEventListener("click", function() {
+      const realIndex = getCurrentLearnAnimalIndex();
+      if (realIndex === -1) return;
+
+      const trimmedName = (learnNameInput.value || "").trim();
+      if (!trimmedName) {
+        alert("Tên con vật không được để trống.");
+        return;
+      }
+
+      animals[realIndex].name = trimmedName;
+      saveAnimals();
+      renderLearnAnimal();
+      renderAdminList();
+    });
+
     fixCurrentImageBtn.addEventListener("click", function() {
-      if (typeof currentAnimalIndex !== "number" || !animals[currentAnimalIndex]) return;
-      startEditAnimal(currentAnimalIndex);
+      const realIndex = getCurrentLearnAnimalIndex();
+      if (realIndex === -1) return;
+
+      const trimmedUrl = (learnImageUrlInput.value || "").trim();
+
+      if (!trimmedUrl) {
+        alert("URL ảnh không được để trống.");
+        return;
+      }
+
+      animals[realIndex].image = trimmedUrl;
+      saveAnimals();
+      renderLearnAnimal();
+      renderAdminList();
+      learnImageWarning.classList.add("hidden");
     });
 
     nextAnimalBtn.addEventListener("click", function() {
-      if (!animals.length) return;
-      currentAnimalIndex = (currentAnimalIndex + 1) % animals.length;
+      const filteredAnimals = getFilteredAnimals(selectedCategory);
+      if (!filteredAnimals.length) return;
+      currentAnimalIndex = (currentAnimalIndex + 1) % filteredAnimals.length;
       renderLearnAnimal();
-      playVtudienAudio(animals[currentAnimalIndex].name);
+      const nextAnimal = getFilteredAnimals(selectedCategory)[currentAnimalIndex];
+      if (nextAnimal) {
+        playVtudienAudio(nextAnimal.name);
+      }
     });
 
     repeatQuestionBtn.addEventListener("click", function() {
